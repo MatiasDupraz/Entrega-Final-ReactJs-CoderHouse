@@ -33,9 +33,17 @@ export const CartProvider = ({children}) => {
     const isInCart = (itemId) => {
         return cart.some(prod => prod.id === itemId)
     }
+
+    const totalQuantity = () => {
+        let totalQ = 0
+        if(cart.lenght !== 0){
+            cart.forEach(element => totalQ += element.quantity)
+        }
+        return totalQ
+    }
     //Con CartContext.Provider como objeto de retorno, se crea el objeto de contexto que recibe los parámetros en value como los declarados
     return(
-        <CartContext.Provider value={{cart, addItem, removeItem, clearCart, isInCart}}> 
+        <CartContext.Provider value={{cart, addItem, removeItem, clearCart, isInCart, totalQuantity}}> 
             {children}
         </CartContext.Provider>
     )

@@ -10,12 +10,15 @@ const Cart = (svg) => {
 
 const CartWidget = () => {
     const {totalQuantity} = useContext(CartContext)
-    let cantProductos = totalQuantity;
+    let cantProductos = totalQuantity();
     return (
-        <div style={{display: totalQuantity !== '0' ? 'block' : 'none'}}>
+        <div style={{display: cantProductos !== 0 ? 'flex' : 'none'}}>
         <Link to='/cart'>
-            <Cart img={emptyCart}/>
-            <p className='text-2xl text-gray-50'>{cantProductos}</p>
+            <div className='flex mt-4'>
+                <Cart img={emptyCart}/>
+                <p className='text-2xl text-gray-50 pl-2'>{cantProductos}</p>
+            </div>
+            
         </Link>
         </div>
     )
