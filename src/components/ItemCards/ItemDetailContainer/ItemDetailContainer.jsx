@@ -7,7 +7,6 @@ const ItemDetailContainer = () => {
     const [product, setProduct] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const {itemId} = useParams()
-    console.log(itemId)
     useEffect(() => {
         const promesa = new Promise((resolve, reject) => {
             setTimeout(()=> {

@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react"
-import {products as productos} from '../../../asyncMock'
 import ItemList from '../ItemList/ItemList'
-
+import {getDocs, collection, query, where} from 'firebase/firestore'
+import {db} from '../../../services/firebase/firebaseConfig'
 import { useParams } from "react-router-dom"
+
 const ItemListContainer = ({greeting}) => {
     const [products, setProducts] = useState([])
     
     const {categoryId} = useParams();
-    
+
     useEffect(() => {
-        const promise = new Promise((resolve, reject) => {
-            setTimeout(()=> {
-                resolve(productos)
-            }, 800)
+        const collectionRef = categoryId ? query(collection(db, 'items'), where('category', '==', categoryId)) : collection(db, 'items')
+
+        getDocs(collectionRef).then(response => {
+            const productsAdapted = response.docs.map(doc => {
+                const data = doc.data()
+                return {id: doc.id, ...data}
+            })
+            setProducts(productsAdapted)
         })
-        promise.then(result => {
-            if(categoryId){
-                setProducts(result.filter(product => product.category === categoryId)) //Se almacena el resultado de la promesa
-            }
-            else{
-                setProducts(result) //Se almacena el resultado de la promesa
-            }
-            
-        })
-    }, [categoryId])
+        .catch(error => console.log(error))
+
+    })
 
     return(
         <div>
