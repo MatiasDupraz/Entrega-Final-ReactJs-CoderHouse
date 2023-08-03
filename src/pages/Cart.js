@@ -19,7 +19,7 @@ const Cart = () => {
         return (
             <div>
                 { cart.map(item => <CartItem key={item.id} {...item}/>) }
-                <h1>Total: ${total}</h1>
+                <h1 className="ml-2 font-bold">Total: ${total()}</h1>
                 <Button func={() => clearCart()} text='Limpiar Carrito'/>
                 <LinkButton to='/checkout' text='Abonar Compra'/>
             </div>
